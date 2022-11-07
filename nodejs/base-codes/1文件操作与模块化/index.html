@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./main1.js"></script>
+  <script src="./main2.js"></script>
+  <script>
+    /**
+     * 如果以上两个模块定义的变量username使用的关键字会有不同的结果
+     * // 使用var -- 弹出的内容是 lck 后引入模块
+     * 使用const/let -- 弹出的内容是 lpl 前引入模块
+    */
+    alert(username)
+  </script>
+</body>
+</html>
