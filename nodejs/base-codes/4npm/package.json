@@ -1,0 +1,12 @@
+{
+  "name": "4npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "a.js",
+  "scripts": {
+    "dev": "nodemon a.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
