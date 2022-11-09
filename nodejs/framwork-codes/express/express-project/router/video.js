@@ -1,10 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const videoController = require('../controller/videoController')
 
-router.get('/list', (req, res, next)=>{
-  console.log(req.method);
-  JSON.parse('(')
-  res.send('/video-list')
-})
+router.get('/list', videoController.list)
 
 module.exports = router

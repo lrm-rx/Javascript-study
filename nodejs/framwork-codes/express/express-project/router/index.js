@@ -1,14 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', (req, res, next)=>{
-  console.log(req.method);
-  res.send('/index')
-})
-
-router.get('/users', (req, res, next)=>{
-  console.log(req.method);
-  res.send('/users ')
-})
+router.use('/video', require('./video')) // 视频相关
+router.use('/user', require('./user')) // 用户相关
 
 module.exports = router
