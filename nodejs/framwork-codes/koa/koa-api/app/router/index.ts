@@ -1,6 +1,13 @@
 import koaRouter from 'koa-router'
-import IndexController from '../controller/IndexController'
+import AdminController from '../controller/AdminController'
+import LoginController from '../controller/LoginController'
+import UploadController from '../controller/UploadController'
+import AuthMiddleware from '../middleware/AuthMiddleware'
 const router = new koaRouter({prefix: '/admin'})
 
-router.get('/', IndexController.index)
+// router.use(AuthMiddleware) // token校验有问题
+
+router.get('/', AdminController.getAdminList)
+router.post('/uploadFile', UploadController.uploadFile)
+router.post('/login', LoginController.index)
 export default router

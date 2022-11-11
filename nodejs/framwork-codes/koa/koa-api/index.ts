@@ -1,3 +1,3 @@
 import run from "./app";
-
-run(3000)
+import config from './app/config';
+run(config.server.port)
