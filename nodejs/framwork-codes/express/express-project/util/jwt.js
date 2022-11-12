@@ -24,7 +24,7 @@ module.exports.verifyToken = async (req, res, next) => {
   }
   try {
     let userinfo = await verify(token, uuid)
-    res.user = userinfo
+    req.user = userinfo
     next()
   } catch (error) {
     res.status(402).json({ error: '无效的token' })

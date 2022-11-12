@@ -25,6 +25,16 @@ exports.login = async (req, res) => {
   res.status(200).json(dbBack)
 }
 
+// 更新用户信息
+exports.update = async (req, res) => {
+  let uid = req.user.userinfo._id
+  // 更新后获取最新数据 {new: true}
+  let updateUserData = await User.findByIdAndUpdate(uid, req.body, {new: true})
+  res.status(200).json({
+    user: updateUserData
+  })
+}
+
 exports.list = async (req, res)=>{
   console.log(req.method);
   res.send('/user-list')

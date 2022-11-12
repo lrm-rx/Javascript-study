@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const md5 = require('md5')
+const basicModel = require('./basicModel')
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -27,14 +28,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null
   },
-  createAt: {
-    type: Date,
-    default: Date.now()
+  avatar: {
+    type: String,
+    default: null
   },
-  updateAt: {
-    type: Date,
-    default: Date.now()
-  }
+  cover:{
+    type: String,
+    default: null
+  },
+  channeldes:{
+    type: String,
+    default: null
+  },
+  subscribeCount:{
+    type:Number,
+    default:0
+  },
+  ...basicModel
 })
 
 module.exports = userSchema

@@ -24,8 +24,7 @@ const sequelize = new Sequelize(config.db.db_name, config.db.db_user, config.db.
   define: { // 数据表的默认字段
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    deletedAt: 'deleted_at'
+    updatedAt: 'updated_at'
   },
   logging: msg => sqlLogger.info(msg) // 数据库日志
 });
@@ -33,10 +32,10 @@ const dbMain = async () => {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    // if (config.server.env === 'dev') {
-    //   await sequelize.sync({ alter: true }) // 根据模型同步创建表,生成环境需要关闭
-    //   console.log('table sync done')
-    // }
+    if (config.server.env === 'dev') {
+      await sequelize.sync({ alter: true }) // 根据模型同步创建表,生成环境需要关闭
+      console.log('table sync done')
+    }
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
