@@ -28,10 +28,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null
   },
-  avatar: {
-    type: String,
-    default: null
-  },
   cover:{
     type: String,
     default: null

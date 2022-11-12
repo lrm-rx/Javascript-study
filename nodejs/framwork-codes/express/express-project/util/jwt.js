@@ -10,7 +10,7 @@ module.exports.createToken = async userinfo => {
     { userinfo },
     uuid,
     {
-      expiresIn: 60 * 60  // 有效期 单位为s
+      expiresIn: 60 * 60 * 24  // 有效期 单位为s
     }
   )
 }

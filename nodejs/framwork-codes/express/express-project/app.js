@@ -8,6 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors()) // 解决跨域
 app.use(morgan('dev')) // 开发时打印日志
+app.use(express.static('public'))
 app.use('/api/v1', router)
 
 
