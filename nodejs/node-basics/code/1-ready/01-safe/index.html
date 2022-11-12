@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>browser-safe</title>
+</head>
+<body>
+  <div>browser-safe</div>
+  <script>
+    const xhr = new XMLHttpRequest()
+    xhr.open('get', 'https://portal-portm.meituan.com/horn/v1/modules/lx-web-config/prod?_lxsdk_rnd=1846c2c3f070', false)
+    xhr.send()
+  </script>
+</body>
+</html>
