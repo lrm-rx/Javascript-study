@@ -1,1 +1,13 @@
 
+[2022-11-13T16:22:38.412] [DEBUG] default - [Object: null prototype] {
+  province: '上海',
+  city: '上海',
+  district: '宝山区',
+  address: '同济支路199号智慧七立方3号楼2-4层',
+  latitude: '43',
+  longitude: '160',
+  message: '求购一条小鱼',
+  contact: '13666666',
+  type: 'sell',
+  time: '1571217561'
+}
