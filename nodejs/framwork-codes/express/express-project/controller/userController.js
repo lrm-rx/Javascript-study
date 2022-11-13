@@ -81,7 +81,7 @@ const userInfoDelete = async (req, res) => {
   console.log(req.method);
   res.send('/user-list')
 }
-const userController = {
+module.exports = {
   userRegister,
   userLogin,
   userinfoUpdate,
@@ -89,4 +89,3 @@ const userController = {
   userList,
   userInfoDelete
 }
-module.exports = userController

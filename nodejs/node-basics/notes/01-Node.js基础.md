@@ -1,6 +1,12 @@
 # 一、Node.js是什么
 Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
+# **在浏览器调试nodejs**
+> 在浏览器输入`chrome://inspect`
+```
+node --inspect --inspect-brk xxx.js
+```
+
 ### 1、特性
 Node.js 可以解析JS代码（没有浏览器安全级别的限制）提供很多系统级别的API，如：
 - 文件的读写 (File System)
@@ -252,6 +258,25 @@ npm unpublish --force
 var hello = require('gp19-npm')
 hello.sayHello()
 ```
+
+###### 2.8.9 node package versions
+- 16.4.6
+- major: 16, minor: 4, patch: 6
+####### npm版本符号
+- ^ : 锁定major
+- ~ : 锁定minor
+- 空: 锁定patch
+- * : 最新版本
+
+###### 2.8.10 node浏览器调试
+```
+node --inspect --inspect-brk xxx.js
+```
+###### 2.8.11 node进程管理工具
+- supervisor
+- nodemon
+- forever
+- pm2
 
 #### 2.9 npm 脚本
 
