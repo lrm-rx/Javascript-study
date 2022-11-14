@@ -2,6 +2,12 @@ const express = require('express')
 // 路由中间件
 const router = express.Router()
 const { list } = require('../controller/index')
+const { lists } = require('../controller/lists')
+
+router.get('/lists', (req, res, next) => {
+  lists(req, res, next)
+})
+
 // 获取数据
 router.get('/userlist', (req, res, next) => {
   list(req, res, next)
