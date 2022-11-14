@@ -80,6 +80,8 @@ http.createServer((req,res) => {
 }).listen(3000)
 ```
 
+
+
 # 二、Node 相关工具
 
 ### 1、NVM: Node Version Manager
@@ -1326,7 +1328,21 @@ server.listen(3000, function() {
 })
 ```
 
-### 5.3 最终目录结构
+### JWT
 
-<img src="../images/dir.jpg" width="300" />
+#### 非对称加密
+
+##### 秘钥生成:
+
+> openssl
+
+##### 生成私钥：
+
+> openssl > genrsa -out rsa_private_key.pem 2048
+
+##### 根据私钥生成公钥：
+
+> openssl > rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
+
+
 

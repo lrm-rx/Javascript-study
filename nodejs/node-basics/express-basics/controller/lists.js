@@ -1,6 +1,7 @@
 const template = require('art-template');
 const path = require('path')
 const fs = require('fs')
+const jwt = require('jsonwebtoken');
 const listModel = require('../model/list')
 
 const lists = (req, res, next) => {
@@ -36,4 +37,21 @@ const lists = (req, res, next) => {
 
 }
 
+const token = (req, res, next) => {
+  // 对称加密
+  // const tokenStr = jwt.sign({username: 'ming'},'d3ee88b9-2d3f-45e6-887d-112201b42264', { expiresIn: 60 * 60 * 24})
+  // const decoded = jwt.verify(tokenStr, 'd3ee88b9-2d3f-45e6-887d-112201b42264');
+  // console.log(decoded.username) // bar
+  // res.send(decoded)
+
+  // 非对称加密
+  const privateKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_private_key.pem'))
+  const tokenStr = jwt.sign({username: 'ming'}, privateKey, { algorithm: 'RS256' })
+  const publicKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_public_key.pem'))
+  const decoded = jwt.verify(tokenStr, publicKey);
+  res.send(decoded)
+
+}
+
 exports.lists = lists
+exports.token = token

@@ -3,9 +3,14 @@ const express = require('express')
 const router = express.Router()
 const { list } = require('../controller/index')
 const { lists } = require('../controller/lists')
+const { token } = require('../controller/lists')
 
 router.get('/lists', (req, res, next) => {
   lists(req, res, next)
+})
+
+router.get('/api/token', (req, res, next) => {
+  token(req, res, next)
 })
 
 // 获取数据
