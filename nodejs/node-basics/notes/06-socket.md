@@ -33,7 +33,7 @@ server.on('connection', (client) => {
 })
 
 function broadcast(client, msg) {
-  for (var key in clients) {
+  for (let key in clients) {
     clients[key].write(client.name + ' 说：' + msg)
   }
 }
@@ -44,13 +44,13 @@ server.listen(9000, 'localhost')
 #### 1.2 ClientSocket.js
 
 ```js
-var net = require('net')
+const net = require('net')
 const readline = require('readline')
 
-var port = 9000
-var host = '127.0.0.1'
+const port = 9000
+const host = '127.0.0.1'
 
-var socket = new net.Socket()
+const socket = new net.Socket()
 
 socket.setEncoding = 'UTF-8'
 
