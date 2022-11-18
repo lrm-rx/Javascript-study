@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   }
 })
 
-app.use('/login', (req, res, next) => {
+app.post('/login', (req, res, next) => {
   res.send(req.body)
 })
 
