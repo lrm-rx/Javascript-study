@@ -7,7 +7,8 @@ const fs = require('fs')
 
 // Stream的写入方式
 const writer = fs.createWriteStream('./foo.md', {
-  flags: 'a',
+  flags: 'r+',
+  start: 4
 })
 
 writer.write('lpl,come on!', (error) => {
