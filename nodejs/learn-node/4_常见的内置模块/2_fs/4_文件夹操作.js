@@ -35,5 +35,30 @@ const path = require('path')
 
 // 3. 文件夹的重命名
 fs.rename('./lrm', './lwx', error => {
-  console.log(error); 
+  console.log(error);
 })
+
+// 递归重命名文件
+function renameFiles(dirname, updateStr, newStr) {
+  let files = fs.readdirSync(dirname, { withFileTypes: true })
+  for (const file of files) {
+    let newName = file.name.replace(updateStr, newStr)
+    if (file.name.includes(updateStr)) {
+      fs.rename(`${dirname}/${file.name}`, `${dirname}/${newName}`, (error) => {
+        if (!error) {
+          console.log(newName + ' 已重命名！')
+        }
+      })
+    }
+    if (file.isDirectory()) {
+      const filepath = path.resolve(dirname, file.name)
+      renameFiles(filepath, updateStr, newStr)
+    }
+  }
+}
+/**
+ * 参数一: 根目录
+ * 参数二: 修改前的内容
+ * 参数三: 要替换的内容
+ */
+renameFiles('./', '【更多资源：www.baidu.com】', '')
