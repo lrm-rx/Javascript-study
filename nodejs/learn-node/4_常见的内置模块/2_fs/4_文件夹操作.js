@@ -43,16 +43,15 @@ function renameFiles(dirname, updateStr, newStr) {
   let files = fs.readdirSync(dirname, { withFileTypes: true })
   for (const file of files) {
     let newName = file.name.replace(updateStr, newStr)
-    if (file.name.includes(updateStr)) {
-      fs.rename(`${dirname}/${file.name}`, `${dirname}/${newName}`, (error) => {
+    if (file.isDirectory()) {
+      const filepath = path.resolve(dirname, file.name)
+      renameFiles(filepath, updateStr, newStr)
+    } else if (file.name.includes(updateStr)) {
+      fs.renameSync(`${dirname}/${file.name}`, `${dirname}/${newName}`, (error) => {
         if (!error) {
           console.log(newName + ' 已重命名！')
         }
       })
-    }
-    if (file.isDirectory()) {
-      const filepath = path.resolve(dirname, file.name)
-      renameFiles(filepath, updateStr, newStr)
     }
   }
 }
