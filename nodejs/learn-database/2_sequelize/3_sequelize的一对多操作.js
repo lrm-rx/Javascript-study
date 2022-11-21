@@ -16,6 +16,31 @@ sequelize.authenticate().then(() => {
 // 方式一:
 // sequelize.define()
 
+
+class Brand extends Model { }
+
+Brand.init({
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  website: DataTypes.STRING,
+  phoneRank: {
+    field: 'phone_rank',
+    type: DataTypes.INTEGER
+  }
+}, {
+  tableName: 'brand',
+  createdAt: false,
+  updatedAt: false,
+  sequelize
+})
+
 // 方式二:
 class Product extends Model { }
 
@@ -34,7 +59,15 @@ Product.init({
     allowNull: false
   },
   price: DataTypes.DOUBLE,
-  score: DataTypes.DOUBLE
+  score: DataTypes.DOUBLE,
+  brandId: { // 外键
+    field: 'brand_id',
+    type: DataTypes.INTEGER,
+    references: {
+      model: Brand,
+      key: 'id'
+    }
+  }
 }, {
   tableName: 'products',
   createdAt: false,
@@ -42,33 +75,19 @@ Product.init({
   sequelize
 })
 
+// 将两张表联系在一起
+Product.belongsTo(Brand, {
+  foreignKey: 'brandId'
+})
+
 
 async function queryProducts() {
-  // 查询产品数据
-  // const result = await Product.findAll({
-  //   where: {
-  //     price: {
-  //       [Op.gte]: 5000
-  //     }
-  //   }
-  // })
-  // 2. 插入产品数据
-  // const addResult = await Product.create({
-  //   title: 'iphone 20 Pro',
-  //   price: 99999,
-  //   score: 10
-  // })
-  
-  // 更新数据
-  const result = await Product.update({
-    brand: '苹果',
-    price: 88888 
-  },{
-    where: {
-      id: 109
+  const result = await Product.findAll({
+    include: {
+      model: Brand
     }
   })
-  console.log('result:', result);
+  console.log(result);
 }
 
 queryProducts()
