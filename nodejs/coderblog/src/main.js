@@ -1,4 +1,5 @@
 const app = require('./app')
+const connection = require('./app/database')
 const { APP_PORT } = require('./app/config')
 
 

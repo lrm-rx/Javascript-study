@@ -1,8 +1,16 @@
+const connection = require('../app/database')
 class UserService {
   async create(user) {
-    // console.log('用户数据:', user);
+    const { username, password } = user
+    const sql = `INSERT INTO sys_user (username, password) VALUES (?,?);`
+    const result = await connection.execute(sql, [username, password])
     // 数据入库
-    return user
+    return result
+  }
+  async getUserByName(username) {
+    const sql = `SELECT * FROM sys_user WHERE username = ?;`
+    const result = await connection.execute(sql, [username])
+    return result
   }
 }
 

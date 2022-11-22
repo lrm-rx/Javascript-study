@@ -9,6 +9,16 @@ const connections = mysql.createPool({
   password: '756131502',
   connectionLimit: 20
 })
+// 测试连接
+connections.getConnection((error, conn)=>{
+  conn.connect((error) => {
+	if(error) {
+		console.log('数据库连接失败:', error)
+	}else{
+		console.log('数据库连接成功');
+	}
+  })
+})
 
 // 2. 执行SQL语句
 const statement = `SELECT * FROM products WHERE price > ? AND score > ?;`
