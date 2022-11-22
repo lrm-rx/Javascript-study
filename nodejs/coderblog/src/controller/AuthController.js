@@ -3,7 +3,7 @@ const { PRIVATE_KEY, TOKEM_TIME } = require('../app/config')
 class AuthController {
   async login(ctx, next) {
     const { id, username } = ctx.user
-    const token = jwt.sign({ id, username }, PRIVATE_KEY, {
+    const token = jwt.sign({ id, username }, PRIVATE_KEY,{
       expiresIn: TOKEM_TIME,
       algorithm: 'RS256'
     })

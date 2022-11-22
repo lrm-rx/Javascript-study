@@ -1,9 +1,9 @@
 const KoaRouter = require('koa-router')
-
-const authRouter = new KoaRouter({ prefix: '/api/v1' })
+const { PATH_PREFIX } = require('../app/config')
+const authRouter = new KoaRouter({ prefix: PATH_PREFIX })
 
 const { login } = require('../controller/AuthController')
-const {verifyLogin} = require('../middleware/AuthMiddleware')
+const { verifyLogin } = require('../middleware/AuthMiddleware')
 
 authRouter.post('/login', verifyLogin, login)
 

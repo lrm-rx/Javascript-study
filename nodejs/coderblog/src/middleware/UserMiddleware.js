@@ -3,7 +3,7 @@ const {
   PASSWORD_IS_REQUIRED,
   USERNAME_IS_EXISTS
 } = require('../constants/error-types')
-const service = require('../service/UserService')
+const userService = require('../service/UserService')
 const md5PW = require('../utils/password-handle')
 
 const verifyUser = async (ctx, next) => {
@@ -19,7 +19,7 @@ const verifyUser = async (ctx, next) => {
     return ctx.app.emit('error', errorType, ctx)
   }
   // 3.用户名是否被注册过
-  const [result] = await service.getUserByName(username) || [[]]
+  const [result] = await userService.getUserByName(username) || [[]]
   if (result.length) {
     const errorType = new Error(USERNAME_IS_EXISTS)
     return ctx.app.emit('error', errorType, ctx)

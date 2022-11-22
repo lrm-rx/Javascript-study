@@ -19,11 +19,19 @@ const errorHander = (error, ctx) => {
       status = 409
       message = errorInfo.USERNAME_OR_PW_ERROR_INFO
       break
+    case errorTypes.UNAUTHORIZATIN:
+      status = 401
+      message = errorInfo.UNAUTHORIZATIN_INFO
+      break
+    case errorTypes.UNPERMISSION:
+      status = 401
+      message = errorInfo.UNPERMISSION_INFO
+      break
     default:
       status = 404
       message = "NOT FOUND"
   }
-  console.log(message);
+  console.log('message:', message);
   ctx.status = status
   ctx.body = message
 }
