@@ -904,3 +904,63 @@
 [2022-11-11T19:44:09.024] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `mobile` `mobile` VARCHAR(255);
 [2022-11-11T19:44:09.035] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `email` `email` VARCHAR(255);
 [2022-11-11T19:44:09.046] [INFO] sql - Executing (default): SHOW INDEX FROM `Admins`
+[2022-11-22T15:50:10.845] [INFO] sql - Executing (default): SELECT 1+1 AS result
+[2022-11-22T15:50:10.852] [INFO] sql - Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admins' AND TABLE_SCHEMA = 'koa_admin'
+[2022-11-22T15:50:10.864] [INFO] sql - Executing (default): SHOW FULL COLUMNS FROM `Admins`;
+[2022-11-22T15:50:10.868] [INFO] sql - Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Admins' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='koa_admin' AND REFERENCED_TABLE_NAME IS NOT NULL;
+[2022-11-22T15:50:10.890] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+[2022-11-22T15:50:10.910] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+[2022-11-22T15:50:10.920] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `username` `username` VARCHAR(255);
+[2022-11-22T15:50:10.934] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `password` `password` VARCHAR(255);
+[2022-11-22T15:50:10.945] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `age` `age` INTEGER;
+[2022-11-22T15:50:10.956] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `mobile` `mobile` VARCHAR(255);
+[2022-11-22T15:50:10.968] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `email` `email` VARCHAR(255);
+[2022-11-22T15:50:10.982] [INFO] sql - Executing (default): SHOW INDEX FROM `Admins`
+[2022-11-22T15:58:01.029] [INFO] sql - Executing (default): SELECT 1+1 AS result
+[2022-11-22T15:58:01.035] [INFO] sql - Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admins' AND TABLE_SCHEMA = 'koa_admin'
+[2022-11-22T15:58:01.040] [INFO] sql - Executing (default): SHOW FULL COLUMNS FROM `Admins`;
+[2022-11-22T15:58:01.043] [INFO] sql - Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Admins' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='koa_admin' AND REFERENCED_TABLE_NAME IS NOT NULL;
+[2022-11-22T15:58:01.049] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+[2022-11-22T15:58:01.064] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+[2022-11-22T15:58:01.075] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `username` `username` VARCHAR(255);
+[2022-11-22T15:58:01.087] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `password` `password` VARCHAR(255);
+[2022-11-22T15:58:01.099] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `age` `age` INTEGER;
+[2022-11-22T15:58:01.121] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `mobile` `mobile` VARCHAR(255);
+[2022-11-22T15:58:01.156] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `email` `email` VARCHAR(255);
+[2022-11-22T15:58:01.170] [INFO] sql - Executing (default): SHOW INDEX FROM `Admins`
+[2022-11-22T16:26:10.122] [INFO] sql - Executing (default): SELECT 1+1 AS result
+[2022-11-22T16:26:10.128] [INFO] sql - Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admins' AND TABLE_SCHEMA = 'koa_admin'
+[2022-11-22T16:26:10.131] [INFO] sql - Executing (default): SHOW FULL COLUMNS FROM `Admins`;
+[2022-11-22T16:26:10.134] [INFO] sql - Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Admins' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='koa_admin' AND REFERENCED_TABLE_NAME IS NOT NULL;
+[2022-11-22T16:26:10.148] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+[2022-11-22T16:26:10.162] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+[2022-11-22T16:26:10.172] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `username` `username` VARCHAR(255);
+[2022-11-22T16:26:10.186] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `password` `password` VARCHAR(255);
+[2022-11-22T16:26:10.196] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `age` `age` INTEGER;
+[2022-11-22T16:26:10.207] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `mobile` `mobile` VARCHAR(255);
+[2022-11-22T16:26:10.217] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `email` `email` VARCHAR(255);
+[2022-11-22T16:26:10.230] [INFO] sql - Executing (default): SHOW INDEX FROM `Admins`
+[2022-11-22T16:28:31.610] [INFO] sql - Executing (default): SELECT 1+1 AS result
+[2022-11-22T16:28:31.616] [INFO] sql - Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admins' AND TABLE_SCHEMA = 'koa_admin'
+[2022-11-22T16:28:31.619] [INFO] sql - Executing (default): SHOW FULL COLUMNS FROM `Admins`;
+[2022-11-22T16:28:31.622] [INFO] sql - Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Admins' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='koa_admin' AND REFERENCED_TABLE_NAME IS NOT NULL;
+[2022-11-22T16:28:31.628] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+[2022-11-22T16:28:31.641] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+[2022-11-22T16:28:31.651] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `username` `username` VARCHAR(255);
+[2022-11-22T16:28:31.662] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `password` `password` VARCHAR(255);
+[2022-11-22T16:28:31.674] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `age` `age` INTEGER;
+[2022-11-22T16:28:31.685] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `mobile` `mobile` VARCHAR(255);
+[2022-11-22T16:28:31.694] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `email` `email` VARCHAR(255);
+[2022-11-22T16:28:31.705] [INFO] sql - Executing (default): SHOW INDEX FROM `Admins`
+[2022-11-22T16:29:46.730] [INFO] sql - Executing (default): SELECT 1+1 AS result
+[2022-11-22T16:29:46.735] [INFO] sql - Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admins' AND TABLE_SCHEMA = 'koa_admin'
+[2022-11-22T16:29:46.739] [INFO] sql - Executing (default): SHOW FULL COLUMNS FROM `Admins`;
+[2022-11-22T16:29:46.742] [INFO] sql - Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Admins' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='koa_admin' AND REFERENCED_TABLE_NAME IS NOT NULL;
+[2022-11-22T16:29:46.749] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+[2022-11-22T16:29:46.762] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+[2022-11-22T16:29:46.775] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `username` `username` VARCHAR(255);
+[2022-11-22T16:29:46.785] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `password` `password` VARCHAR(255);
+[2022-11-22T16:29:46.797] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `age` `age` INTEGER;
+[2022-11-22T16:29:46.806] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `mobile` `mobile` VARCHAR(255);
+[2022-11-22T16:29:46.818] [INFO] sql - Executing (default): ALTER TABLE `Admins` CHANGE `email` `email` VARCHAR(255);
+[2022-11-22T16:29:46.830] [INFO] sql - Executing (default): SHOW INDEX FROM `Admins`

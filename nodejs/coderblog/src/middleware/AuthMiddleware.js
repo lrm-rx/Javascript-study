@@ -20,11 +20,13 @@ const verifyLogin = async (ctx, next) => {
   }
   // 3. 用户是否在存及判断密码是否一致(加密)
   const [result] = await service.getUserByName(username) || [[]]
-  console.log('object', result);
   if (!result.length || result[0].password !== md5PW(password)) {
     const errorType = new Error(USERNAME_OR_PW_ERROR)
     return ctx.app.emit('error', errorType, ctx)
   }
+
+  delete result[0].password
+  ctx.user = result[0]
 
   await next()
 }

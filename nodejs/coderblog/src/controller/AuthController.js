@@ -1,8 +1,17 @@
-
+const jwt = require('jsonwebtoken')
+const { PRIVATE_KEY, TOKEM_TIME } = require('../app/config')
 class AuthController {
   async login(ctx, next) {
-    const { username } = ctx.request.body
-    ctx.body = `登录成功,欢迎${username}回来!`
+    const { id, username } = ctx.user
+    const token = jwt.sign({ id, username }, PRIVATE_KEY, {
+      expiresIn: TOKEM_TIME,
+      algorithm: 'RS256'
+    })
+    ctx.body = {
+      id,
+      username,
+      token
+    }
   }
 }
 
