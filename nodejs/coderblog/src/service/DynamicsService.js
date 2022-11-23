@@ -11,15 +11,18 @@ class DynamicsService {
   }
   async queryDynamicsList({ offset, size }) {
     try {
-      const sql = `SELECT
+      const sql = `SELECT 
       d.id id, 
       d.content content, 
-      d.createAt cteateTime, 
+      d.createAt createTime,
       d.updateAt updateTime,
-      JSON_OBJECT('id', u.id, 'username', u.username) author
-    FROM dynamics d
-    LEFT JOIN sys_user u on d.user_id = u.id
-    LIMIT ?, ?`
+      JSON_OBJECT('id', u.id, username, u.username) author,
+      (SELECT COUNT(*) FROM comment c
+      WHERE c.dynamics_id = d.id
+      ) comment_count
+      FROM dynamics d
+      LEFT JOIN sys_user u ON d.user_id = u.id
+      LIMIT 0, 100;`
       const [result] = await connection.execute(sql, [offset, size])
       return result
     } catch (error) {
@@ -43,7 +46,7 @@ class DynamicsService {
       console.log(error);
     }
   }
-  async updateDynamic({ content, dynamicsId }) {
+  async updateDynamicById({ content, dynamicsId }) {
     try {
       const sql = `UPDATE dynamics SET content = ? WHERE id = ?;`
       const [result] = await connection.execute(sql, [content, dynamicsId])
@@ -51,6 +54,25 @@ class DynamicsService {
     } catch (error) {
       console.log(error);
     }
+  }
+  async deleteDynamicById(dynamicsId) {
+    try {
+      const sql = `DELETE FROM dynamics WHERE id = ?;`
+      const [result] = await connection.execute(sql, [dynamicsId])
+      return result
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async hasLabel(dynamicsId, labelId) {
+    const sql = `SELECT * FROM dynamics_babel WHERE dynamics_id = ? AND label_id = ?;`
+    const [result] = await connection.execute(sql, [dynamicsId, labelId])
+    return result[0] ? true : false
+  }
+  async addLabel(dynamicsId, labelId) {
+    const sql = `INSERT INTO dynamics_babel (dynamics_id, label_id) VALUES (?, ?);`
+    const [result] = await connection.execute(sql, [dynamicsId, labelId])
+    return result
   }
 }
 

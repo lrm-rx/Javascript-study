@@ -40,7 +40,7 @@ const verifyLogin = async (ctx, next) => {
 const verifyAuth = async (ctx, next) => {
   // 1. 获取token
   const authorization = ctx.headers.authorization
-  if(!authorization) {
+  if (!authorization) {
     const errorType = new Error(UNAUTHORIZATIN)
     return ctx.app.emit('error', errorType, ctx)
   }
@@ -60,16 +60,18 @@ const verifyAuth = async (ctx, next) => {
 }
 
 // 删除和更新权限
-const verifyPermission = async (ctx, next) => {
-  const {id} = ctx.user
-  const {dynamicsId} = ctx.params
-  try {
-    const isPermission = await authService.checkMoment(dynamicsId,id)
-    if(!isPermission) throw new Error()
-    await next()
-  } catch (error) {
-    const errorType = new Error(UNPERMISSION)
-    return ctx.app.emit('error', errorType, ctx)
+const verifyPermission = (tableName) => {
+  return async (ctx, next) => {
+    const { id: userId } = ctx.user
+    const { id } = ctx.params // 表的id值
+    try {
+      const isPermission = await authService.checkResource(tableName, Number(id), userId)
+      if (!isPermission) throw new Error()
+      await next()
+    } catch (error) {
+      const errorType = new Error(UNPERMISSION)
+      return ctx.app.emit('error', errorType, ctx)
+    }
   }
 }
 
