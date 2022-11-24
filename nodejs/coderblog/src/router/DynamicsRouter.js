@@ -2,7 +2,15 @@ const KoaRouter = require('koa-router')
 const { PATH_PREFIX } = require('../app/config')
 const dynamicsRouter = new KoaRouter({ prefix: PATH_PREFIX })
 
-const { create, querySingleDynamic, getDynamicsList, update, deleteDynamic, addLabels } = require('../controller/DynamicsController')
+const { 
+  create, 
+  querySingleDynamic, 
+  getDynamicsList, 
+  update, 
+  deleteDynamic, 
+  addLabels,
+  fileInfo
+} = require('../controller/DynamicsController')
 const { verifyAuth, verifyPermission } = require('../middleware/AuthMiddleware')
 const { verifyLabelExists } = require('../middleware/LabelMiddleware')
 
@@ -19,5 +27,8 @@ dynamicsRouter.delete('/dynamics/:id', verifyAuth, verifyPermission('dynamics'),
 
 // 给动态添加标签
 dynamicsRouter.post('/dynamics/:id/labels', verifyAuth, verifyPermission('dynamics'), verifyLabelExists, addLabels)
+
+// 动态配图
+dynamicsRouter.get('/dynamics/images/:filename', fileInfo)
 
 module.exports = dynamicsRouter

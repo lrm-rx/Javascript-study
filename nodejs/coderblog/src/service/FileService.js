@@ -13,7 +13,7 @@ class FileService {
     const sql = `SELECT * FROM avatar WHERE user_id = ?;`
     try {
       const [result] = await connection.execute(sql, [userId])
-      return result[0]
+      return result.pop()
     } catch (error) {
       console.log(error);
     }
@@ -22,6 +22,15 @@ class FileService {
     const sql = `INSERT INTO file (filename, mimetype, size, user_id, dynamics_id) values (?, ?, ?, ?, ?);`
     try {
       const [result] = await connection.execute(sql, [filename, mimetype, size, userId, dynamicsId])
+      return result[0]
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getFileByName(filename){
+    const sql = `SELECT * FROM file WHERE filename = ?;`
+    try {
+      const [result] = await connection.execute(sql, [filename])
       return result[0]
     } catch (error) {
       console.log(error);

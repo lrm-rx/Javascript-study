@@ -1,4 +1,7 @@
+const fs = require('fs')
+const { PICTURE_PATH } = require('../constants/file-path')
 const dynamicsService = require('../service/DynamicsService')
+const fileService = require('../service/FileService')
 class DynamicsController {
   async create(ctx, next) {
     // 1. 获取user_id和content
@@ -41,14 +44,25 @@ class DynamicsController {
     const { labels } = ctx
     const { id: dynamicsId } = ctx.params
     // 2. 添加所有的标签
-    for(let label of labels) {
+    for (let label of labels) {
       // 2.1 判断标签是否已经和动态有关系
       const isExists = await dynamicsService.hasLabel(dynamicsId, label.id)
-      if(!isExists){
+      if (!isExists) {
         await dynamicsService.addLabel(dynamicsId, label.id)
       }
     }
     ctx.body = '动态标签添加成功'
+  }
+  async fileInfo(ctx, next) {
+    let { filename } = ctx.params
+    const fileInfo = await fileService.getFileByName(filename)
+    const { type } = ctx.query
+    const types = ['sm', 'md', 'lg']
+    if(types.some(item => item === type)){
+      filename = filename + '-' + type
+    }
+    ctx.response.set('content-type', fileInfo.mimetype)
+    ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`)
   }
 }
 
