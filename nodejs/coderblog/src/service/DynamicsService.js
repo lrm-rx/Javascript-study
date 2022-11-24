@@ -34,7 +34,7 @@ class DynamicsService {
       d.content content, 
       d.createAt cteateTime, 
       d.updateAt updateTime,
-      JSON_OBJECT('id', u.id, 'username', u.username) author
+      JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) author
     FROM dynamics d
     LEFT JOIN sys_user u on d.user_id = u.id
     WHERE d.id = ?;`

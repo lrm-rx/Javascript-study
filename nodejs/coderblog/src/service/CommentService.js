@@ -13,7 +13,7 @@ class CommentService {
     const sql = `
       SELECT
       d.id id, d.content content, d.createAt cteateTime, d.updateAt updateTime,
-      JSON_OBJECT('id', u.id, 'username', u.username) author,
+      JSON_OBJECT('id', u.id, 'username', u.username, 'avatarUrl', u.avatar_url) author,
       IF(COUNT(l.id),JSON_ARRAYAGG(
         JSON_OBJECT(
           'id', l.id, 'name', l.label_name
