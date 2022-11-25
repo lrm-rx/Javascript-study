@@ -34,3 +34,21 @@ const server = http.createServer((req, res) => {
 server.listen(8888, '0.0.0.0', () => {
   console.log('启动成功!');
 })
+
+const {Server} = require('http')
+
+const app = new Server((req, res) => {
+  
+  let aa = new URL(req.url, 'http://localhost:8080')
+  // console.log('url:', aa.searchParams);
+  // 把键值对列表转换为一个对象
+  const params = Object.fromEntries(aa.searchParams)
+  console.log('ppp', params);
+  res.end('index')
+})
+
+
+
+app.listen(8080, () => {
+  console.log('服务器已经启动');
+})
