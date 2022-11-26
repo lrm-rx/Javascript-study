@@ -1,64 +1,83 @@
-
+const { exec } = require('../db/mysql')
 // 博客列表
 const getList = (author, keyword) => {
-  // 
-  return [
-    {
-      id: 1,
-      title: '标题1',
-      content: '内容222222',
-      createTime: '2022-11-25',
-      updateTime: '2022-11-26',
-      author: 'lrm'
-    },
-    {
-      id: 2,
-      title: '标题2',
-      content: '内容222222',
-      createTime: '2022-11-25',
-      updateTime: '2022-11-26',
-      author: 'lrm'
-    }
-  ]
+  let sql = `SELECT * FROM blogs WHERE 1=1 `
+  if (author) {
+    sql += `AND author='${author}' `
+  }
+  if (keyword) {
+    sql += `AND title like '%${keyword}%' `
+  }
+  sql += `ORDER BY createTime DESC;`
+
+  return exec(sql)
 }
 
 // 博客详情
 const getBlogDetailById = (id) => {
-  console.log('id:', id);
-  return {
-    id: 1,
-    title: '标题1',
-    content: '内容222222',
-    createTime: '2022-11-25',
-    updateTime: '2022-11-26',
-    author: 'lrm'
-  }
+  const sql = `SELECT * FROM blogs WHERE id='${id}';`
+  return exec(sql).then(rows => {
+    return rows[0]
+  })
 }
 // 新建博客
-const createBlog = (content) => {
-  console.log('content:', content);
-  return {
-    id: 3,
-    msg: '新建博客成功'
-  }
+const createBlog = (ctx) => {
+  const { title, content, author } = ctx
+  const sql = `
+   INSERT INTO blogs (title, content, author) VALUES
+   ('${title}', '${content}', '${author}');
+  `
+  return exec(sql).then(inserData => {
+    return {
+      id: inserData.insertId,
+      msg: '新建博客成功'
+    }
+  }).catch(error => {
+    console.error(error);
+  })
 }
 
 // 更新博客
-const updateBlog = (id, content) => {
-  console.log('update:', id, content);
-  return {
-    id: 3,
-    msg: '更新博客成功'
+const updateBlog = (ctx) => {
+  const { id, title, content } = ctx
+  if (!title && !content) {
+    return {
+      msg: '标题或内容不能为空!'
+    }
   }
+  let sql = ''
+  if (title) {
+    sql = `UPDATE blogs SET title='${title}' WHERE id = ${id};`
+  }
+  if (content) {
+    sql = `UPDATE blogs SET content='${content}' WHERE id = ${id};`
+  }
+  if(title && content){
+    sql = `UPDATE blogs SET title='${title}', content='${content}' WHERE id = ${id};`
+  }
+  
+  return exec(sql).then(updateData => {
+    if(updateData.affectedRows > 0) {
+      return true
+    }
+    return false
+  }).catch(error => {
+    console.error(error);
+  })
 }
 
 // 删除博客
-const deleteBlogById = (id) => {
-  console.log('delete:', id);
-  return {
-    id: 3,
-    msg: '删除博客成功'
-  }
+const deleteBlogById = (ctx) => {
+  const { id } = ctx
+  const sql = `DELETE FROM blogs WHERE id = ${id};`
+  return exec(sql).then(deleteData => {
+    if(deleteData.affectedRows > 0) {
+      return true
+    }
+    return false
+  }).catch(error => {
+    console.error(error);
+  })
 }
 
 module.exports = {

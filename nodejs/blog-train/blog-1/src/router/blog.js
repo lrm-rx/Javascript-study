@@ -12,31 +12,56 @@ const handleBlogRouter = (req, res) => {
   // 获取博客列表
   if (method === 'GET' && req.path === '/api/blog/list') {
     const { author = '', keyword = '' } = req.query
-    const listData = getList(author, keyword)
-    return new SuccessModel(listData)
+    const result = getList(author, keyword)
+    return result.then(listData => {
+      return new SuccessModel(listData)
+    }).catch(error => {
+      console.error(error);
+    })
   }
   // 获取博客详情
   if (method === 'GET' && req.path === '/api/blog/detail') {
     const { id } = req.query
-    const blogDetail = getBlogDetailById(id)
-    return new SuccessModel(blogDetail)
+    const result = getBlogDetailById(id)
+    return result.then(data => {
+      return new SuccessModel(data)
+    }).catch(error => {
+      console.error(error);
+    })
   }
   // 新建博客
   if (method === 'POST' && req.path === '/api/blog/create') {
-    const data = createBlog(req.body)
-    return new SuccessModel(data)
+    req.body.author = 'lrm'
+    const result = createBlog(req.body)
+    return result.then(data=>{
+      return new SuccessModel(data)
+    }).catch(error => {
+      console.error(error);
+    })
   }
   // 更新博客
   if (method === 'POST' && req.path === '/api/blog/update') {
-    const { id, content } = req.body
-    const data = updateBlog(id, content)
-    return new SuccessModel(data)
+    const result = updateBlog(req.body)
+    return result.then(value=>{
+      if(value) {
+        return new SuccessModel('更新成功')
+      }
+      return new ErrorModel('更新失败')
+    }).catch(error => {
+      console.error(error);
+    })
   }
   // 删除博客
   if (method === 'POST' && req.path === '/api/blog/delete') {
-    const { id } = req.body
-    const data = deleteBlogById(id)
-    return new SuccessModel(data)
+    const result = deleteBlogById(req.body)
+    return result.then(value=>{
+      if(value) {
+        return new SuccessModel('删除成功')
+      }
+      return new ErrorModel('删除失败')
+    }).catch(error => {
+      console.error(error);
+    })
   }
 }
 
