@@ -4,8 +4,7 @@ const { exec } = require('../db/mysql')
 const login = (username, password) => {
   const sql = `SELECT * FROM users WHERE username='${username}' AND password='${password}';`
   return exec(sql).then(userInfo => {
-    console.log('userinfo:', userInfo);
-    return userInfo
+    return userInfo[0] || {}
   }).catch(error => {
     console.error(error);
   })
