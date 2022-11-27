@@ -12,7 +12,7 @@ if (env === 'dev') {
     port: 3307,
     database: 'myblog'
   }
-  // reids
+  // redis
   REDIS_CONF = {
     port: 6379,
     host: '127.0.0.1'
@@ -28,7 +28,7 @@ if(env === 'production') {
     port: 3307,
     database: 'myblog'
   }
-  // reids
+  // redis
   REDIS_CONF = {
     port: 6379,
     host: '127.0.0.1'
