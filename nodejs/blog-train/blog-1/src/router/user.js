@@ -1,6 +1,7 @@
 const { login, registerCheck } = require('../controller/user')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const getCookieExpire = require('../utils/getCookieExpire')
+const { set } = require('../db/redis')
 
 const handleUserRouter = (req, res) => {
   const method = req.method
@@ -14,7 +15,9 @@ const handleUserRouter = (req, res) => {
         // res.setHeader('Set-Cookie', `username=${userData.username}; path=/; httpOnly; expires=${getCookieExpire()}`)
         // 设置session
         req.session.username = userData.username
-        req.session.realname = userData.username
+        req.session.realname = userData.realname
+        //同步到redis
+				set(req.sessionId, req.session)
         let data = {
           ...userData,
           msg: '登录成功!'
