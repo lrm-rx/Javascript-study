@@ -13,7 +13,7 @@ const getList = (author, keyword) => {
   if (author === '') {
     sql += `AND author=${author} `
   }
-  if (author === '') {
+  if (keyword === '') {
     sql += `AND title like ${keyword} `
   }
   sql += `ORDER BY createTime DESC;`

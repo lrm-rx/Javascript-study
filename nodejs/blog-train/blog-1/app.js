@@ -1,60 +1,63 @@
 const qs = require('querystring')
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
-const getCookieExpire = require('./src/utils/getCookieExpire')
+// const getCookieExpire = require('./src/utils/getCookieExpire')
 const { get, set } = require('./src/db/redis')
+const { access } = require('./src/utils/log')
 // session数据
 // const SESSION_DATA = {}
 
 // 用于处理post data
 const getPostData = (req) => {
-  const promise = new Promise((resolve, reject) => {
-    if (req.method !== 'POST') {
-      resolve({})
-      return
-    }
-    if (req.headers['content-type'] !== 'application/json') {
-      resolve({})
-      return
-    }
-    let postData = ''
-    req.on('data', chunk => {
-      postData += chunk.toString()
-    })
-    req.on('end', () => {
-      if (!postData) {
-        resolve({})
-        return
-      }
-      resolve(
-        JSON.parse(postData)
-      )
-    })
-  })
-  return promise
+	const promise = new Promise((resolve, reject) => {
+		if (req.method !== 'POST') {
+			resolve({})
+			return
+		}
+		if (req.headers['content-type'] !== 'application/json') {
+			resolve({})
+			return
+		}
+		let postData = ''
+		req.on('data', chunk => {
+			postData += chunk.toString()
+		})
+		req.on('end', () => {
+			if (!postData) {
+				resolve({})
+				return
+			}
+			resolve(
+				JSON.parse(postData)
+			)
+		})
+	})
+	return promise
 }
 
 const serverHandle = (req, res) => {
-  // 设置返回格式 JSON
-  res.setHeader('Content-type', 'application/json')
-  // 获取path
-  const url = req.url
-  req.path = url.split('?')[0]
-  // 解析query
-  req.query = qs.parse(url.split('?')[1])
+	// 记录 access log
+	access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
+	// 设置返回格式 JSON
+	res.setHeader('Content-type', 'application/json')
+	// 获取path
+	const url = req.url
+	req.path = url.split('?')[0]
+	// 解析query
+	req.query = qs.parse(url.split('?')[1])
 
-  // 解析 cookie
-  req.cookie = {}
-  const cookieStr = req.headers.cookie || ''
-  cookieStr.split(';').forEach(item => {
-    if (!item) {
-      return
-    }
-    const arr = item.split('=')
-    const key = arr[0].trim()
-    const val = arr[1].trim()
-    req.cookie[key] = val
-  })
+	// 解析 cookie
+	req.cookie = {}
+	const cookieStr = req.headers.cookie || ''
+	cookieStr.split(';').forEach(item => {
+		if (!item) {
+			return
+		}
+		const arr = item.split('=')
+		const key = arr[0].trim()
+		const val = arr[1].trim()
+		req.cookie[key] = val
+	})
 
 	// 解析 session 
 	let needSetCookie = false
@@ -81,43 +84,43 @@ const serverHandle = (req, res) => {
 		// 处理 postData
 		return getPostData(req)
 	})
-	.then(postData => {
-		req.body = postData
+		.then(postData => {
+			req.body = postData
 
-		const blogResult = handleBlogRouter(req, res)
+			const blogResult = handleBlogRouter(req, res)
 			if (blogResult) {
 				blogResult.then(blogData => {
 					if (needSetCookie) {
 						// 操作 cookie
 						res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
 					}
-				res.end(
-					JSON.stringify(blogData)
-				)
-			})
-			return
-		}
-		
-		// 处理 user 路由
-		const userResult = handleUserRouter(req, res)
-		if (userResult) {
-			userResult.then(userData => {
-				if (needSetCookie) {
-					// 操作 cookie
-					res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
-				
-				}
-				res.end(
-					JSON.stringify(userData)
-				)
-			})
-			return
-		}
-		// 返回404
-		res.writeHead(404, {"Content-type": "text/plain"})
-		res.write("404 Not Found\n")
-		res.end()
-	})
+					res.end(
+						JSON.stringify(blogData)
+					)
+				})
+				return
+			}
+
+			// 处理 user 路由
+			const userResult = handleUserRouter(req, res)
+			if (userResult) {
+				userResult.then(userData => {
+					if (needSetCookie) {
+						// 操作 cookie
+						res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
+
+					}
+					res.end(
+						JSON.stringify(userData)
+					)
+				})
+				return
+			}
+			// 返回404
+			res.writeHead(404, { "Content-type": "text/plain" })
+			res.write("404 Not Found\n")
+			res.end()
+		})
 
 }
 
