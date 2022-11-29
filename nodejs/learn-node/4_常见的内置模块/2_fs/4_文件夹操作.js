@@ -47,11 +47,18 @@ function renameFiles(dirname, updateStr, newStr) {
       const filepath = path.resolve(dirname, file.name)
       renameFiles(filepath, updateStr, newStr)
     } else if (file.name.includes(updateStr)) {
-      fs.renameSync(`${dirname}/${file.name}`, `${dirname}/${newName}`, (error) => {
-        if (!error) {
-          console.log(newName + ' 已重命名！')
-        }
-      })
+      // renameSync是没有回调的, 即第三个参数, 与rename不同
+      try {
+        fs.renameSync(`${dirname}/${file.name}`, `${dirname}/${newName}`)
+        console.log(newName + ' 已重命名！')
+      } catch (error) {
+        console.error(error);
+      }
+      // fs.rename(`${dirname}/${file.name}`, `${dirname}/${newName}`, (error) => {
+      //   if (!error) {
+      //     console.log(newName + ' 已重命名！')
+      //   }
+      // })
     }
   }
 }
