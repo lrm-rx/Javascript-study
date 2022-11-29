@@ -8,20 +8,19 @@ const {
   deleteBlogById
 } = require('../controller/blog')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
+const loginCheck = require('../middleware/loginCheck')
 
 router.get('/list', function (req, res, next) {
-  console.log('object');
   let { author = '', keyword = '' } = req.query
-  // if(req.query.inadmin){
-  //   // 管理员界面
-  //   const loginCheckResult = loginChech(req)
-  //   if(loginCheckResult){
-  //     // 没有登录
-  //     return loginCheckResult
-  //   }
-  //   // 强制查询自己的博客
-  //   author = req.session.username
-  // }
+  if (req.query.isadmin) {
+    // 管理员界面
+    if (req.session.username == null) {
+      // 没有登录
+      res.json(new ErrorModel('未登录'))
+    }
+    // 强制查询自己的博客
+    author = req.session.username
+  }
   const result = getList(author, keyword)
   return result.then(listData => {
     return res.json(new SuccessModel(listData))
@@ -40,27 +39,21 @@ router.get('/detail', function (req, res, next) {
   })
 });
 
-router.post('/create', function (req, res, next) {
-  // const loginCheckResult = loginCheck(req)
-  // if (loginCheckResult) {
-  //   // 未登录
-  //   return loginCheckResult
-  // }
-  req.body.author = req.session.username
-  const result = createBlog(req.body)
-  return result.then(data => {
-    res.json(new SuccessModel(data))
-  }).catch(error => {
-    console.error(error);
-  })
+router.post('/create', loginCheck, function (req, res, next) {
+  try {
+    req.body.author = req.session.username
+    const result = createBlog(req.body)
+    return result.then(data => {
+      res.json(new SuccessModel(data))
+    }).catch(error => {
+      console.error(error);
+    })
+  } catch (error) {
+    console.log('error:', error);
+  }
 });
 
-router.post('/update', function (req, res, next) {
-  // const loginCheckResult = loginCheck(req)
-  // if (loginCheckResult) {
-  //   // 未登录
-  //   return loginCheckResult
-  // }
+router.post('/update', loginCheck, function (req, res, next) {
   const result = updateBlog(req.body)
   return result.then(value => {
     if (value) {
@@ -72,12 +65,7 @@ router.post('/update', function (req, res, next) {
   })
 });
 
-router.post('/delete', function (req, res, next) {
-  // const loginCheckResult = loginCheck(req)
-  // if (loginCheckResult) {
-  //   // 未登录
-  //   return loginCheckResult
-  // }
+router.post('/delete', loginCheck, function (req, res, next) {
   const result = deleteBlogById(req.body)
   return result.then(value => {
     if (value) {

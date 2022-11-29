@@ -1,29 +1,31 @@
 const express = require('express');
 const router = express.Router();
+const { login, registerCheck } = require('../controller/user')
+const { SuccessModel, ErrorModel } = require('../model/resModel')
 
 router.post('/login', function (req, res, next) {
   const { username, password } = req.body
-    const result = login(username, password)
-    return result.then(userData => {
-      if (userData.username) {
-        // 操作cookie
-        // res.setHeader('Set-Cookie', `username=${userData.username}; path=/; httpOnly; expires=${getCookieExpire()}`)
-        // 设置session
-        req.session.username = userData.username
-        req.session.realname = userData.realname
-        let data = {
-          ...userData,
-          msg: '登录成功!'
-        }
-        return res.json(new SuccessModel(data))
+  const result = login(username, password)
+  return result.then(userData => {
+    if (userData.username) {
+      // 操作cookie
+      // res.setHeader('Set-Cookie', `username=${userData.username}; path=/; httpOnly; expires=${getCookieExpire()}`)
+      // 设置session
+      req.session.username = userData.username
+      req.session.realname = userData.realname
+      let data = {
+        ...userData,
+        msg: '登录成功!'
       }
-      res.json(new ErrorModel('用户名或密码错误!'))
-    }).catch(error => {
-      console.error(error);
-    })
+      return res.json(new SuccessModel(data))
+    }
+    res.json(new ErrorModel('用户名或密码错误!'))
+  }).catch(error => {
+    console.error(error);
+  })
 });
 router.get('/login-test', (req, res, next) => {
-  if(req.session.username) {
+  if (req.session.username) {
     res.json({
       errno: 0,
       msg: '登录成功!'
@@ -32,7 +34,7 @@ router.get('/login-test', (req, res, next) => {
   }
   res.json({
     errno: -1,
-      msg: '没有登录!'
+    msg: '没有登录!'
   })
 })
 

@@ -22,7 +22,7 @@ const handleBlogRouter = (req, res) => {
   // 获取博客列表
   if (method === 'GET' && req.path === '/api/blog/list') {
     let { author = '', keyword = '' } = req.query
-    if(req.query.inadmin){
+    if(req.query.isadmin){
       // 管理员界面
       const loginCheckResult = loginChech(req)
       if(loginCheckResult){

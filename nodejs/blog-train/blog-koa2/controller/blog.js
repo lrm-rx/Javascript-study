@@ -4,7 +4,8 @@ const { exec, escape } = require('../db/mysql')
 
 const reg = /^["|'](.*)["|']$/g; // 去掉首尾的引号
 // 博客列表
-const getList = (author, keyword) => {
+const getList = async (author, keyword) => {
+  console.log('autho:', author);
   author = xss(author)
   keyword = xss(keyword)
   author = escape(author.replace(reg,"$1"))
@@ -19,21 +20,22 @@ const getList = (author, keyword) => {
   }
   sql += `ORDER BY createTime DESC;`
   console.log('blogListsql:', sql)
-  return exec(sql)
+  return await exec(sql)
 }
 
 // 博客详情
-const getBlogDetailById = (id) => {
+const getBlogDetailById = async (id) => {
   id = xss(id)
   id = escape(id.replace(reg,"$1"))
   const sql = `SELECT * FROM blogs WHERE id=${id};`
-  return exec(sql).then(rows => {
-    return rows[0]
-  })
+  // return exec(sql).then(rows => {
+  //   return rows[0]
+  // })
+  const rows = await exec(sql)
+  return rows[0]
 }
 // 新建博客
-const createBlog = (ctx) => {
-  let { title, content, author } = ctx
+const createBlog = async ({ title, content, author }) => {
   title = xss(title)
   content = xss(content)
   author = xss(author)
@@ -44,19 +46,15 @@ const createBlog = (ctx) => {
    INSERT INTO blogs (title, content, author) VALUES
    (${title}, ${content}, ${author});
   `
-  return exec(sql).then(inserData => {
-    return {
-      id: inserData.insertId,
-      msg: '新建博客成功'
-    }
-  }).catch(error => {
-    console.error(error);
-  })
+  const inserData = await exec(sql)
+  return {
+    id: inserData.insertId,
+    msg: '新建博客成功'
+  }
 }
 
 // 更新博客
-const updateBlog = (ctx) => {
-  let { id, title, content } = ctx
+const updateBlog = async ({ id, title, content }) => {
   id = xss(id)
   title = xss(title)
   content = xss(content)
@@ -78,31 +76,23 @@ const updateBlog = (ctx) => {
   if(title && content){
     sql = `UPDATE blogs SET title=${title}, content=${content} WHERE id = ${id};`
   }
-  
-  return exec(sql).then(updateData => {
-    if(updateData.affectedRows > 0) {
-      return true
-    }
-    return false
-  }).catch(error => {
-    console.error(error);
-  })
+  const updateData = await exec(sql)
+  if(updateData.affectedRows > 0) {
+    return true
+  }
+  return false
 }
 
 // 删除博客
-const deleteBlogById = (ctx) => {
-  let { id } = ctx
+const deleteBlogById = async ({ id }) => {
   id = xss(id)
   id = escape(id.replace(reg,"$1"))
   const sql = `DELETE FROM blogs WHERE id = ${id};`
-  return exec(sql).then(deleteData => {
-    if(deleteData.affectedRows > 0) {
-      return true
-    }
-    return false
-  }).catch(error => {
-    console.error(error);
-  })
+  const deleteData = await exec(sql)
+  if(deleteData.affectedRows > 0) {
+    return true
+  }
+  return false
 }
 
 module.exports = {
