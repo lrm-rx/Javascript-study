@@ -22,7 +22,7 @@ const CountDown = (props: IProps) => {
       clearInterval(timer)
     }
   }, [time])
-	return <span className={styles.countDown}>{count}</span>
+	return <span className={styles.countDown}>{count}S</span>
 }
 
 export default CountDown
