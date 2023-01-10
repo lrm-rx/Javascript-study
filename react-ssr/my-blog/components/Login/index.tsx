@@ -9,11 +9,11 @@ interface IProps {
   onClose: Function;
 }
 const Login = (props: IProps) => {
-  const { isShow = false } = props;
+  const { isShow = false, onClose} = props;
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
   const [form, setForm] = useState({
     phone: '15277695877',
-    verify: '',
+    verify: '2222',
   });
   const handleClose = () => {
     setForm({
@@ -48,7 +48,19 @@ const Login = (props: IProps) => {
     }
 
   };
-  const handleLogin = () => { };
+  const handleLogin = () => {
+    request.post('/api/user/login', {
+      ...form,
+      identity_type: 'phone'
+    }).then((res: any) => {
+      if(res?.code === 0) {
+        console.log('登录成功!')
+        onClose && onClose()
+      }else{
+        message.error(res?.msg || '未知错误')
+      }
+    })
+   };
   const handleOtherLogin = () => { };
   const changeFormValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

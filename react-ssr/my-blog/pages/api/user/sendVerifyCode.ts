@@ -37,8 +37,9 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
       },
     }
   );
-  console.log('短信返回response:', response);
+
   const { statusCode, statusMsg, templateSMS } = response as any;
+  console.log('验证码:', verifyCode);
   if (statusCode === '000000') {
     session.verifyCode = verifyCode;
     await session.save();
